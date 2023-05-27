@@ -1,4 +1,10 @@
 package com.xdlamni.weatherforecast.api.model
 
-class DailyForecast {
-}
+data class DailyForecast (
+    var name: String? = null,
+    var icon: String? = null,
+    var temp: Double? = null,
+    var desciption: String? = null,
+    var minTemp: String? = null,
+    var maxTemp: String? = null,
+)

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".WeatherForecastApplication"
@@ -15,6 +17,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherForecast"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD73OyIRiEkzYBl_h4H0Lm6m0uS_RkwlfM"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

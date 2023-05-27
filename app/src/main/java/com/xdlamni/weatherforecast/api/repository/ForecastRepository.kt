@@ -10,8 +10,14 @@ import javax.inject.Inject
 class ForecastRepository @Inject constructor(
     private val forecastApi: ForecastApi
 ) {
-    fun getWeather(lat: Double, ): Observable<ForecastAPIResponse> {
-       return forecastApi.getWeather(-28.201, 20.897)
+    fun getCurrentForecast(lat: Double, lon: Double): Observable<ForecastAPIResponse> {
+        return forecastApi.getCurrentForecast(lat, lon)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getDailyForecast(lat: Double, lon: Double): Observable<ForecastAPIResponse> {
+       return forecastApi.getDailyForecast(lat, lon)
            .subscribeOn(Schedulers.io())
            .observeOn(AndroidSchedulers.mainThread())
     }

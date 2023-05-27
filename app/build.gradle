@@ -21,11 +21,11 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.openweathermap.org/data/2.5/\"")
             buildConfigField("String", "API_KEY", "\"f094bfb0019aae9fbb6b8a21df09fc70\"")
         }
         release {
             minifyEnabled false
-            buildConfigField("String", "API_KEY", "f094bfb0019aae9fbb6b8a21df09fc70")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -84,4 +84,8 @@ dependencies {
 
     //Navigation
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
+
+    // Location
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 }
