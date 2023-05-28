@@ -1,4 +1,4 @@
-package com.xdlamni.weatherforecast.api.model
+package com.xdlamni.weatherforecast.api.dto
 
 import com.google.gson.annotations.SerializedName
 

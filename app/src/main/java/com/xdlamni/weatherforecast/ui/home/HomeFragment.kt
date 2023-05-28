@@ -7,7 +7,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +19,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.google.android.gms.maps.model.LatLng
-import com.xdlamni.weatherforecast.R
+import com.xdlamni.weatherforecast.databinding.FragmentHomeBinding
 import com.xdlamni.weatherforecast.helpers.PermissionHelperInterface
 import com.xdlamni.weatherforecast.helpers.PermissionHelpers
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +31,9 @@ class HomeFragment: Fragment() {
     private lateinit var fragmentActivity: FragmentActivity
     private lateinit var fusedLocationProvider: FusedLocationProviderClient
     private lateinit var currentLocation: Location
+    private var _binding: FragmentHomeBinding? = null
 
+    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,12 +44,20 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         enableUserLocationSettings()
+        observeWeatherForecast()
+    }
+
+    private fun observeWeatherForecast() {
+        homeViewModel.weatherForecast.observe(viewLifecycleOwner) { dailyForecastList ->
+            binding.txtHeader.text = dailyForecastList[0].city
+        }
     }
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
@@ -72,7 +80,7 @@ class HomeFragment: Fragment() {
         val lat: Double = location.latitude
         val lon: Double = location.longitude
 
-        homeViewModel.getCurrentForecastAtLocation(lat, lon)
+        homeViewModel.getDailyForecastAtLocation(lat, lon)
 
     }
     private fun enableUserLocationSettings() {
@@ -93,5 +101,10 @@ class HomeFragment: Fragment() {
     private fun isLocationSettingEnabled(): Boolean {
         val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
