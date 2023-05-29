@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WeatherForecast</string>
+    <string name="daily_card_header">5-DAY FORECAST</string>
+    <string name="app_unavailable">Weather App is unavailable</string>
+    <string name="app_unavailable_body">Weather App requires permission to access your current location, you can turn this feature on in settings</string>
+    <string name="go_to_settings">GO TO SETTINGS</string>
+    <string name="try_again">TRY AGAIN</string>
+    <string name="try_again_message">Oops, Something went wrong while fetching your forecast. We are working fast to resolve the matter. We apologise for the inconvenience</string>
+    <string name="try_again_network">Oops, Something went wrong while fetching your forecast. Please make sure you are connected to the internet and try again. We apologise for the inconvenience</string>
 </resources>

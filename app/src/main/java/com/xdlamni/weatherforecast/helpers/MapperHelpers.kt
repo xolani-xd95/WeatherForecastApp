@@ -14,12 +14,11 @@ class MapperHelpers {
                 tempIcon = forecast.weather?.get(0)?.icon,
                 temp = forecast.main?.maxTemp?.convertToString(),
                 day = forecast.time?.convertToDate(),
-                description = forecast.weather?.get(0)?.description,
+                description = forecast.weather?.get(0)?.description.formatDesc(forecast.main?.maxTemp?.convertToString(), forecast.main?.minTemp?.convertToString()),
                 minTemp = forecast.main?.minTemp?.convertToString(),
                 maxTemp = forecast.main?.maxTemp?.convertToString()
             )
         }
-
         return aryDailyForecast
     }
 }

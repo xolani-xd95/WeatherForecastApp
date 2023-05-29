@@ -11,7 +11,7 @@ data class Forecast (
     @SerializedName("wind") val wind: Wind?,
     @SerializedName("visibility") val visibility: Double?,
     @SerializedName("pop") val propOfPrecipitation: Double?, // The values of the parameter vary between 0 and 1, where 0 is equal to 0%, 1 is equal to 100%
-    @SerializedName("rain") val rain: Rain?,
+    @SerializedName("rain") val rain: Double?,
     @SerializedName("snow") val snow: Snow?,
     @SerializedName("sys") val sys: Sys?,
     @SerializedName("dt_txt") val timeOfForecast: String?,

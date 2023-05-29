@@ -3,6 +3,7 @@ package com.xdlamni.weatherforecast.di
 import com.xdlamni.weatherforecast.BuildConfig
 import com.xdlamni.weatherforecast.api.service.ForecastApi
 import com.xdlamni.weatherforecast.api.repository.ForecastRepository
+import com.xdlamni.weatherforecast.helpers.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,8 +47,8 @@ object NetworkApiModule {
         return OkHttpClient().newBuilder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(requestInterceptor)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(Constants.MAX_TIMEOUT, TimeUnit.SECONDS)
+            .connectTimeout(Constants.MAX_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 
