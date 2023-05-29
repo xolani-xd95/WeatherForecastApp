@@ -30,6 +30,8 @@ import com.xdlamni.weatherforecast.api.ApiResponse
 import com.xdlamni.weatherforecast.api.dto.DailyForecastDTO
 import com.xdlamni.weatherforecast.databinding.FragmentHomeBinding
 import com.xdlamni.weatherforecast.helpers.MapperHelpers
+import com.xdlamni.weatherforecast.helpers.loadWithGlide
+import com.xdlamni.weatherforecast.helpers.mapDailyDtoToUIModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +43,7 @@ class HomeFragment: Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var adapter: DailyForecastItemAdapter
     private lateinit var currentUserLocation: Location
+    private var isResumedFromMinimised = false
 
     private val binding get() = _binding!!
 
@@ -150,9 +153,10 @@ class HomeFragment: Fragment() {
         }
     }
     private fun updateForecastView(dailyForecast: DailyForecastDTO) {
-        val mappedDailyForecast = MapperHelpers().mapDailyDtoToUIModel(dailyForecast)
+        val mappedDailyForecast = dailyForecast.mapDailyDtoToUIModel()
 
         binding.todayForecastHeader.txtHeader.text = mappedDailyForecast[0].city
+        binding.todayForecastHeader.imgTodayTemp.loadWithGlide(mappedDailyForecast[0].tempIcon)
         binding.todayForecastHeader.txtTodayTemp.text = mappedDailyForecast[0].maxTemp
         binding.todayForecastHeader.txtTodayTempDesc.text = mappedDailyForecast[0].description
         adapter = DailyForecastItemAdapter(mappedDailyForecast)
@@ -163,8 +167,14 @@ class HomeFragment: Fragment() {
         _binding = null
     }
 
+    override fun onPause() {
+        super.onPause()
+        isResumedFromMinimised = true
+    }
     override fun onResume() {
         super.onResume()
-        getCurrentLocation()
+        if(isResumedFromMinimised) {
+            getCurrentLocation()
+        }
     }
 }

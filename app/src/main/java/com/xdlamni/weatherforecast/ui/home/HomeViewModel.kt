@@ -26,6 +26,7 @@ class HomeViewModel @Inject constructor(
         _getLoadingState.value = true
 
         val response = forecastRepository.getDailyForecast(lat, lon)
+
         _getLoadingState.value = false
         _getWeatherForecast.value = response
     }
